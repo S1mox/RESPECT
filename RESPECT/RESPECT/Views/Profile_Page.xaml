@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="RESPECT.Views.Profile_Page">
+    <ContentPage.Content>
+        <StackLayout Padding="15">
+            <StackLayout>
+                <Image x:Name="User_image" HeightRequest="230" Aspect="AspectFit" Margin="30, 15, 30, 10"></Image>
+            </StackLayout>
+
+            <Button x:Name="edit_button" HorizontalOptions="FillAndExpand" Text="Редактировать" Margin="5" BackgroundColor="White" BorderColor="WhiteSmoke" BorderWidth="2" Clicked="Edit_clicked"/>
+
+            <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <Label x:Name="User_name" FontSize="16"/>
+                    <Label x:Name="User_status"  FontSize="16"/>
+                    <Label x:Name="User_Points"  FontSize="16"/>
+                </StackLayout>
+
+                <Label Text="Комнаты"  FontSize="32" HorizontalTextAlignment="Center"/>
+
+                <ScrollView VerticalOptions="FillAndExpand" Orientation="Vertical"/>
+                <ListView ItemsSource="{Binding Rooms}" ItemTapped="GoToRoomViewPage">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
+                                    <ImageButton Source="{Binding PathToLogo}" 
+                                                   WidthRequest="30" 
+                                                   HeightRequest="30"
+                                                 Aspect="AspectFit"
+                                                 BackgroundColor="White"/>
+                                    <Label Text="{Binding Name}" 
+                                                   HorizontalTextAlignment="Center" 
+                                                   VerticalTextAlignment="Center"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

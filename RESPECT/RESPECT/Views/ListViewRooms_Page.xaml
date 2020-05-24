@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:RESPECT.Views"
+             mc:Ignorable="d"
+             x:Class="RESPECT.Views.ListViewRooms_Page"
+             Title="Доступные комнаты">
+
+    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="15">
+        <ScrollView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" IsVisible="True" Orientation="Vertical">
+            <ListView x:Name="rooms_list" VerticalOptions="FillAndExpand" ItemsSource="{Binding Rooms}" ItemTapped="GoToRoomViewPage">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
+                                <Image  Source="{Binding PathToLogo}" 
+                                                   WidthRequest="100" 
+                                                   HeightRequest="100"
+                                             Aspect="AspectFit"
+                                       BackgroundColor="Snow"/>
+                                <Label Text="{Binding Name}" 
+                                                   HorizontalTextAlignment="Center" 
+                                                   VerticalTextAlignment="Center"
+                                       FontSize="24"/>
+                                <!--<Label Text="" FontSize="24" TextColor="Black" 
+                                       HorizontalTextAlignment="Center" 
+                                       VerticalTextAlignment="Center"/>-->
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>

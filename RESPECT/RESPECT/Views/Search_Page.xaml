@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="RESPECT.Views.Search_Page"
+             Title="Поиск комнат">
+    <StackLayout>
+        <SearchBar HorizontalOptions="FillAndExpand"/>
+        
+        <ScrollView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical" IsVisible="False">
+            
+        </ScrollView>
+
+        <Label x:Name="NoData_label" Text="Здесь ничего нет"  FontSize="28" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" IsVisible="True"/>
+    </StackLayout>
+</ContentPage>

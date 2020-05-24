@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="RESPECT.Views.RoomView_Page">
+    <ContentPage.Content>
+        <StackLayout Padding="15">
+            <StackLayout>
+                <Image x:Name="Room_image" HeightRequest="230" Aspect="AspectFit" Margin="35, 20, 35, 10"></Image>
+            </StackLayout>
+
+            <Label x:Name="Room_name" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="28"/>
+
+            <StackLayout>
+                <Label Text="Модераторы: "/>
+                <ListView>
+                    
+                </ListView>
+            </StackLayout>
+
+            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <Label Text="Участники: "/>
+                <ListView>
+                    
+                </ListView>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="0.2.0" package="com.companyname.respect" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="28" />
+	<application android:label="RESPECT.Android" android:icon="@drawable/logo_small"></application>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+</manifest>
