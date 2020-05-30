@@ -7,12 +7,59 @@
              x:Class="RESPECT.Views.Search_Page"
              Title="Поиск комнат">
     <StackLayout>
-        <SearchBar HorizontalOptions="FillAndExpand"/>
-        
-        <ScrollView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical" IsVisible="False">
-            
+        <StackLayout Orientation="{OnPlatform Android=Horizontal, UWP=Vertical}" HeightRequest="46" Padding="{OnPlatform Android=15, UWP=40}">
+            <SearchBar x:Name="SearchBar_rooms" 
+                       HorizontalOptions="FillAndExpand" 
+                       Placeholder="Введите название комнаты" 
+                       TextChanged="Search_activate"
+                       FontSize="{OnPlatform Android=12, UWP=24}"/>
+
+            <ImageButton BackgroundColor="Snow"
+                         Source="{OnPlatform Android=baseline_vpn_key_24.xml, UWP=baseline_vpn_key_black_24.png}"
+                         Clicked="Search_key" 
+                         Padding="5,5,15,5" 
+                         WidthRequest="66"
+                         HorizontalOptions="Start"
+                         IsVisible="{OnPlatform Android=True, UWP= False}"/>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" IsVisible="{OnPlatform Android=False, UWP=True}">
+                <Entry x:Name="entry_uwp" Placeholder="Введите ключ приглашения комнаты"/>
+                <Button Text="Найти" BackgroundColor="#000a12" TextColor="Snow" Clicked="Search_key_uwp"/>
+            </StackLayout>
+        </StackLayout>
+
+        <ScrollView x:Name="rooms_scroll" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical" IsVisible="False">
+            <ListView x:Name="Room_list" VerticalOptions="FillAndExpand" ItemsSource="{Binding Rooms}" ItemTapped="GoToRoom">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
+                                <Image  
+                                    WidthRequest="100" 
+                                    HeightRequest="100"
+                                    Aspect="AspectFit"
+                                    BackgroundColor="Snow"
+                                    Source="{Binding PathToLogo}"/>
+
+                                <Label
+                                    HorizontalTextAlignment="Center" 
+                                    VerticalTextAlignment="Center"
+                                    FontSize="24"
+                                    Text="{Binding Name}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </ScrollView>
 
-        <Label x:Name="NoData_label" Text="Здесь ничего нет"  FontSize="28" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" IsVisible="True"/>
+        <Label x:Name="NoData_label" 
+               Text="Здесь ничего нет" 
+               FontSize="28" 
+               VerticalOptions="FillAndExpand"
+               HorizontalOptions="FillAndExpand"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center"
+               IsVisible="True"/>
     </StackLayout>
 </ContentPage>

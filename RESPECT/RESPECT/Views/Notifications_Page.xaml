@@ -10,7 +10,22 @@
     <ContentPage.Content>
         <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <ScrollView x:Name="notifications_scroll" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <ListView x:Name="notifications_list" VerticalOptions="FillAndExpand" ItemsSource="{Binding Notifications}" PropertyChanged="OnChangedList">                    
+                <ListView x:Name="notifications_list" 
+                          VerticalOptions="FillAndExpand" 
+                          PropertyChanged="OnChangedList" 
+                          HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Padding="10">
+                                    <Label Text="{Binding Path=Sender, StringFormat='Отправитель {0}'}"/>
+                                    <Label Text="{Binding Path=Value, StringFormat='Сколько: {0}'}"/>
+                                    <Label Text="{Binding Path=Room, StringFormat='Комната {0}'}"/>
+                                    <Label Text="{Binding Path=Description, StringFormat='Описание: {0}'}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </ScrollView>
 

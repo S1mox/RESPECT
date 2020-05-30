@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using RESPECT.CachingData;
+using System;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,13 +10,12 @@ namespace RESPECT.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListViewRooms_Page : ContentPage
     {
-        public List<DB_Data.Rooms> Rooms { get; set; }
-        private static DB_Data.Users User;
+        public List<Models.Room> Rooms { get; set; } = new List<Models.Room>();
+        public Models.User User { get; set; } = new Models.User();
 
-        public ListViewRooms_Page(DB_Data.Users user)
+        public ListViewRooms_Page(Models.User user)
         {
             InitializeComponent();
-
             User = user;
 
             Setup();
@@ -28,27 +24,81 @@ namespace RESPECT.Views
         public ListViewRooms_Page()
         {
             InitializeComponent();
-
-            User = DB_Data.DB_Data_Controller.CurrentUser;
+            User = CurrentData.CurrentUser;
 
             Setup();
         }
 
-        private void Setup()
+        private async void Setup()
         {
-            Rooms = DB_Data.DB_Data_Controller.GetRooms(User.Id);            
+            try
+            {
+                CachingData.CurrentData.GetRooms(User.Id, Rooms);              
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert($"{User.Id}", $"{User.Name} + {ex.Message}", "OK");
+                throw;
+            }
 
-            BindingContext = this;        
+            rooms_list.ItemsSource = Rooms;
+
+            BindingContext = this;
         }
 
-        private async void GoToRoomViewPage(object sender, ItemTappedEventArgs e)
+        private async void GoToRoom(object sender, ItemTappedEventArgs e)
         {
-            await Navigation.PushAsync(new RoomView_Page((DB_Data.Rooms)e.Item)
+            try
             {
-                Title = ((DB_Data.Rooms)e.Item).Name,
-            });
+                Models.Room room = ((Models.Room)e.Item);
+                ListView view = ((ListView)sender);
 
-            ((ListView)sender).SelectedItem = null;
+                await Navigation.PushAsync(new RoomView_Page(room) { Title = room.Name });
+
+                view.SelectedItem = null;
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Ошибка", ex.Message, "Ок"); 
+                throw;
+            }           
+        }
+
+        private async void GoToRoomCreate(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Room_create());
+        }
+
+        private async void Refresh_clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                CurrentData.UpdateData();
+                List<Models.Room> rooms = new List<Models.Room>();
+                rooms.AddRange(Rooms);
+
+                CurrentData.GetRooms(User.Id, rooms);
+
+                Rooms = rooms;
+
+                rooms_list.ItemsSource = Rooms;
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert($"{User.Id}", $"{User.Name} + {ex.Message}", "OK");
+                throw;
+            }
+        }
+
+        private void sort_clicked(object sender, EventArgs e)
+        {
+            var SortedRooms = from r in Rooms
+                    orderby r.Name
+                    select r;
+
+            Rooms = SortedRooms.ToList();
+            rooms_list.ItemsSource = Rooms;
+
         }
     }
 }

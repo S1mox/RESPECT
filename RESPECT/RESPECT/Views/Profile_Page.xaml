@@ -6,44 +6,87 @@
              mc:Ignorable="d"
              x:Class="RESPECT.Views.Profile_Page">
     <ContentPage.Content>
-        <StackLayout Padding="15">
-            <StackLayout>
-                <Image x:Name="User_image" HeightRequest="230" Aspect="AspectFit" Margin="30, 15, 30, 10"></Image>
-            </StackLayout>
-
-            <Button x:Name="edit_button" HorizontalOptions="FillAndExpand" Text="Редактировать" Margin="5" BackgroundColor="White" BorderColor="WhiteSmoke" BorderWidth="2" Clicked="Edit_clicked"/>
-
-            <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                    <Label x:Name="User_name" FontSize="16"/>
-                    <Label x:Name="User_status"  FontSize="16"/>
-                    <Label x:Name="User_Points"  FontSize="16"/>
+        <ScrollView Orientation="Vertical">
+            <StackLayout Padding="15">
+                <StackLayout>
+                    <ImageButton x:Name="User_image" BackgroundColor="White" HeightRequest="{OnPlatform Android=230, UWP=400}" Aspect="AspectFit" Margin="30, 15, 30, 10" Clicked="Seturi_button"/>
                 </StackLayout>
 
-                <Label Text="Комнаты"  FontSize="32" HorizontalTextAlignment="Center"/>
+                <Button x:Name="seturi_button_uwp"
+                    Text="Установить изображение"
+                    BackgroundColor="White" 
+                    BorderColor="WhiteSmoke"
+                    TextColor="Black"
+                    BorderWidth="2"
+                    HorizontalOptions="FillAndExpand" 
+                    Margin="5" 
+                    Clicked="SetPictureUwp_clicked"
+                    IsVisible="{OnPlatform Android=false, UWP=true}"
+                    Scale="{OnPlatform Android=1, UWP= 1}"/>
 
-                <ScrollView VerticalOptions="FillAndExpand" Orientation="Vertical"/>
-                <ListView ItemsSource="{Binding Rooms}" ItemTapped="GoToRoomViewPage">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
-                                    <ImageButton Source="{Binding PathToLogo}" 
-                                                   WidthRequest="30" 
-                                                   HeightRequest="30"
-                                                 Aspect="AspectFit"
-                                                 BackgroundColor="White"/>
-                                    <Label Text="{Binding Name}" 
-                                                   HorizontalTextAlignment="Center" 
-                                                   VerticalTextAlignment="Center"/>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <StackLayout x:Name="uri_edit" IsVisible="False">
+                    <Entry x:Name="uri_entry" 
+                       HorizontalOptions="FillAndExpand" 
+                       Placeholder="URI-ссылка на изображение"/>
 
+                    <Button Text="Подтвердить" Clicked="SetPictureUri_clicked"/>
+                </StackLayout>
 
+                <Button x:Name="edit_button" 
+                    HorizontalOptions="FillAndExpand" 
+                    Text="Редактировать" 
+                    Margin="5" 
+                    BackgroundColor="White" 
+                    BorderColor="WhiteSmoke" 
+                    BorderWidth="2" 
+                    Clicked="Edit_clicked"/>
+
+                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <StackLayout HorizontalOptions="FillAndExpand">
+                        <Label x:Name="User_name" VerticalTextAlignment="Center" FontSize="18"/>
+                        <Entry x:Name="User_name_entry" 
+                               VerticalTextAlignment="Center" 
+                               FontSize="18"
+                               IsVisible="False"
+                               Placeholder="Введите имя"/>
+                    
+                        <Label x:Name="User_status" VerticalTextAlignment="Center"  FontSize="18"/>
+                        <Entry x:Name="User_status_entry" 
+                               VerticalTextAlignment="Center"  
+                               FontSize="18"
+                               IsVisible="False"
+                               Placeholder="Введите статус"/>
+                    </StackLayout>
+
+                    <Label Text="Комнаты"  FontSize="24" HorizontalTextAlignment="Center"/>
+
+                    <ListView x:Name="rooms_list" 
+                              ItemsSource="{Binding Rooms}" 
+                              ItemTapped="GoToRoom" 
+                              VerticalOptions="Start" 
+                              RowHeight="{OnPlatform Android=40, UWP=70}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+                                        <Image 
+                                            WidthRequest="60" 
+                                            HeightRequest="60"
+                                            Aspect="AspectFit"
+                                            BackgroundColor="Snow"
+                                            Source="{Binding PathToLogo}"/>
+                                        <Label Text="{Binding Name}" 
+                                            HorizontalTextAlignment="Center" 
+                                            VerticalTextAlignment="Center"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+
+                <Button Text="Обновить" BackgroundColor="#000a12" TextColor="Snow" HorizontalOptions="FillAndExpand" Clicked="Refresh"/>
             </StackLayout>
-        </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="RESPECT.Views.ManageGivePoints_Page">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Кому:" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" WidthRequest="180" FontSize="18"/>
+                <Picker x:Name="picker_member" FontSize="20" HorizontalOptions="FillAndExpand" Margin="0,0,15,0"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Коммуникация:" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" WidthRequest="180"  FontSize="18"/>
+                <StackLayout>
+                    <Entry x:Name="CommunicationEntry" 
+                           HorizontalTextAlignment="Center" 
+                           VerticalTextAlignment="Center"
+                           WidthRequest="60" 
+                           FontSize="18" 
+                           Keyboard="Numeric"/>
+                    
+                    <Stepper x:Name="CommunicationStepper" 
+                             Minimum="0" 
+                             Value="0" 
+                             Increment="50"
+                             Maximum="1000"
+                             Scale="0.9"  />
+                </StackLayout>                
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Результативность:" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" WidthRequest="180"  FontSize="18"/>
+                <StackLayout>
+                    <Entry x:Name="ResultatEntry" 
+                           HorizontalTextAlignment="Center" 
+                           VerticalTextAlignment="Center" 
+                           WidthRequest="60"  
+                           FontSize="18" 
+                           Keyboard="Numeric"/>
+                    
+                    <Stepper x:Name="ResultatStepper" Minimum="0" Value="0" Increment="50" Maximum="1000" Scale="0.9"  />
+                </StackLayout>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Исполнительность:" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" WidthRequest="180"  FontSize="18"/>
+                <StackLayout>
+                    <Entry x:Name="DeployingEntry" 
+                           HorizontalTextAlignment="Center" 
+                           VerticalTextAlignment="Center" 
+                           WidthRequest="60"  
+                           FontSize="18"
+                           Keyboard="Numeric"/>
+                    
+                    <Stepper x:Name="DeployingStepper" Minimum="0" Value="0" Increment="50" Maximum="1000" Scale="0.9"  />
+                </StackLayout>               
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Прочее:" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" WidthRequest="180"  FontSize="18"/>
+                <StackLayout>
+                    <Entry x:Name="OtherEntry"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center" 
+                           WidthRequest="60"  
+                           FontSize="18"
+                           Keyboard="Numeric"/>
+                    
+                    <Stepper x:Name="OtherStepper" Minimum="0" Value="0" Increment="50" Maximum="1000" Scale="0.9"  />
+                </StackLayout>
+            </StackLayout>
+            
+            <Editor x:Name="description_entry" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="15" Placeholder="Описание" Keyboard="Text"/>
+            <Button HorizontalOptions="Center" 
+                    VerticalOptions="Center" 
+                    Text="Совершить операцию"
+                    Clicked="GivePointsClicked" 
+                    BackgroundColor="Snow"
+                    TextColor="#000a12"
+                    Margin="20"
+                    BorderColor="WhiteSmoke"
+                    BorderWidth="1"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

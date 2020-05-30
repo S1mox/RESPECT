@@ -6,26 +6,164 @@
              mc:Ignorable="d"
              x:Class="RESPECT.Views.RoomView_Page">
     <ContentPage.Content>
-        <StackLayout Padding="15">
-            <StackLayout>
-                <Image x:Name="Room_image" HeightRequest="230" Aspect="AspectFit" Margin="35, 20, 35, 10"></Image>
-            </StackLayout>
+        <ScrollView Orientation="Vertical" >
+            <StackLayout Padding="20" Margin="5">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Image x:Name="Room_image" HeightRequest="{OnPlatform Android=100, UWP=250}" WidthRequest="{OnPlatform Android=150, UWP=350}" Aspect="AspectFit" Margin="35, 20, 0, 10"/>
 
-            <Label x:Name="Room_name" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="28"/>
+                    <StackLayout Orientation="Vertical" Margin="5,20,5,10">
+                        <Button x:Name="give_button" 
+                            Text="Начислить очки" 
+                            Clicked="GiveButton_clicked" 
+                            TextColor="Snow" 
+                            BackgroundColor="#000a12" 
+                            Opacity="0.95" 
+                            HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand"
+                            FontSize="{OnPlatform UWP=24, Android=8}"/>
 
-            <StackLayout>
-                <Label Text="Модераторы: "/>
-                <ListView>
-                    
-                </ListView>
-            </StackLayout>
+                        <Button x:Name="pickup_button" 
+                            Text="Снять очки" 
+                            Clicked="PickupButton_clicked" 
+                            TextColor="Snow" 
+                            BackgroundColor="#000a12" 
+                            Opacity="0.95"
+                            HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand"
+                            FontSize="{OnPlatform UWP=24, Android=8}"/>
 
-            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <Label Text="Участники: "/>
-                <ListView>
-                    
-                </ListView>
+                        <Button x:Name="create_button"
+                            Text="Создать комнату"
+                            TextColor="Snow"
+                            BackgroundColor="#000a12"
+                            Opacity="0.95"
+                            HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand"
+                            Clicked="CreateButton_clicked"                                
+                            FontSize="{OnPlatform UWP=24, Android=8}"/>
+
+                        <Button x:Name="seturi_button"
+                            Text="Установить изображение"
+                            TextColor="Snow"
+                            BackgroundColor="#000a12"
+                            Opacity="0.95"
+                            HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand"
+                            Clicked="SetPicture_clicked"
+                            FontSize="{OnPlatform UWP=24, Android=8}"/>  
+
+                    </StackLayout>
+                </StackLayout>
+
+                <Label x:Name="Room_name" 
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"
+                   FontSize="24"/>
+                
+                <Label x:Name="Room_key" 
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"
+                   FontSize="18"/>
+
+                <Button x:Name="enter_button" 
+                    Text="Вступить" 
+                    BackgroundColor="#000a12" 
+                    TextColor="Snow"
+                    HorizontalOptions="FillAndExpand" 
+                    Margin="10,15,10,15" 
+                    IsVisible="False"
+                    Clicked="EnterToRoom"
+                    Scale="{OnPlatform Android=0.85, UWP= 1}"/>
+
+                <Button x:Name="exit_button" 
+                    Text="Выйти" 
+                    BackgroundColor="#000a12" 
+                    TextColor="Snow"
+                    HorizontalOptions="FillAndExpand" 
+                    Margin="10,0,10,0" 
+                    IsVisible="False"
+                    Clicked="ExitFromRoom"
+                    Scale="{OnPlatform Android=0.85, UWP= 1}"/>
+
+                <Button x:Name="seturi_button_uwp"
+                    Text="Установить изображение"
+                    BackgroundColor="#000a12" 
+                    TextColor="Snow"
+                    HorizontalOptions="FillAndExpand" 
+                    Margin="10,0,10,0" 
+                    Clicked="SetPictureUwp_clicked"
+                    IsVisible="{OnPlatform Android=false, UWP=true}"
+                    Scale="{OnPlatform Android=0.85, UWP= 1}"/>
+
+                <StackLayout x:Name="uri_edit" IsVisible="False">
+                    <Entry x:Name="uri_entry" 
+                       HorizontalOptions="FillAndExpand" 
+                       Placeholder="URI-ссылка на изображение"/>
+
+                    <Button Text="Подтвердить" Clicked="SetPictureUri_clicked"/>
+                </StackLayout>
+               
+
+                <StackLayout  x:Name="rooms_stack" VerticalOptions="Start" >
+                    <ListView x:Name="Rooms_list" ItemTapped="GoToRoom" VerticalOptions="Start" RowHeight="40" VerticalScrollBarVisibility="Never">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Orientation="Horizontal"  VerticalOptions="Start" >
+                                        <Image WidthRequest="48" Source="{OnPlatform Android=baseline_folder_open_24.xml, UWP=baseline_folder_open_black_48.png}"/>
+                                        <Label Text="{Binding Name}" VerticalTextAlignment="Center"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+
+                <StackLayout x:Name="moderators_stack" Padding="0,10,0,10">
+                    <Label Text="Модераторы: "/>
+                    <ListView x:Name="Moderators_list" ItemTapped="GoToModerator" RowHeight="40" VerticalScrollBarVisibility="Never">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Name}" VerticalTextAlignment="Center"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+
+                <StackLayout x:Name="users_stack" Padding="0,10,0,10">
+                    <Label Text="Участники: "/>
+                    <StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand">
+                        <ListView x:Name="Users_list" ItemTapped="GoToUser"  HorizontalOptions="FillAndExpand" RowHeight="40" VerticalScrollBarVisibility="Never">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout x:Name="UserView" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                            <Image Source="{Binding PathToImage}" Aspect="AspectFit" WidthRequest="24" Margin="0,0,10,0"/>
+                                            <Label Text="{Binding Name}" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"/>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <ListView x:Name="Points_list" IsEnabled="False" RowHeight="40" HorizontalOptions="End" WidthRequest="{OnPlatform Android=50, UWP=300}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout>
+                                            <Label Text="{Binding Value}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </StackLayout>
             </StackLayout>
-        </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

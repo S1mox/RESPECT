@@ -1,4 +1,5 @@
 ﻿using Xamarin.Forms;
+using RESPECT.Views;
 
 namespace RESPECT
 {
@@ -8,22 +9,22 @@ namespace RESPECT
         {
             InitializeComponent();
 
-            if (Data.AppData.CurrentUser == null)
-            {
-                MainPage = new Views.Login_Page(this); // если пользователь не идентифицирован                
-            }
-            else
-            {
-                MainPage = new Views.RootTabbed_Page(); // если пользователь уже есть
-            }
+            CachingData.CurrentData.UpdateData();
+
+            MainPage = new NavigationPage(new Login_Page(this))
+            {               
+                BarBackgroundColor = Color.White,
+                BarTextColor = Color.Black
+            };
         }
 
         protected override void OnStart()
         {
         }
 
-        protected override void OnSleep()
+        protected async override void OnSleep()
         {
+            await SavePropertiesAsync();
         }
 
         protected override void OnResume()

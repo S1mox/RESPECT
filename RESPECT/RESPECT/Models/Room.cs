@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace RESPECT.Models
 {
@@ -9,14 +6,29 @@ namespace RESPECT.Models
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        internal int Id { get; private set; }
+        private int id;
 
         private string name;
         private string inviteKey;
         private string pathToLogo;
-        private List<(int Id, int Points)> usersAndPoints = new List<(int Id, int Points)>();
-        private List<Room> nestedRooms = new List<Room>();
+        private int parentRoom;
 
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+
+            set
+            {
+                if (value != id)
+                {
+                    id = value;
+                    OnPropertyChanged("Id");
+                }
+            }
+        }
         public string Name
         {
             get
@@ -29,7 +41,7 @@ namespace RESPECT.Models
                 if (value != name)
                 {
                     name = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Name"));
+                    OnPropertyChanged("Name");
                 }
             }
         }
@@ -46,7 +58,7 @@ namespace RESPECT.Models
                 if (value != inviteKey)
                 {
                     inviteKey = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs("InviteKey"));
+                    OnPropertyChanged("InviteKey");
                 }
             }
         }
@@ -63,58 +75,36 @@ namespace RESPECT.Models
                 if (value != pathToLogo)
                 {
                     pathToLogo = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs("PathToLogo"));
+                    OnPropertyChanged("PathToLogo");
                 }
             }
         }
 
-        public List<(int Id, int Points)> UsersAndPoints
+        public int ParentRoom
         {
             get
             {
-                return usersAndPoints;
+                return parentRoom;
             }
+
             set
             {
-                if (value != usersAndPoints)
+                if (value != parentRoom)
                 {
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs("UsersAndPoints"));
+                    parentRoom = value;
+                    OnPropertyChanged("ParentRoom");
                 }
             }
         }
 
-        public List<Room> NestedRooms
+        protected void OnPropertyChanged(string propName)
         {
-            get
-            {
-                return nestedRooms;
-            }
-            set
-            {
-                if (value != nestedRooms)
-                {
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs("NestedRooms"));
-                }
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        public Room(int id, string name, string inviteKey, string pathToLogo, List<(int Id, int Points)> usersAndPoints = null, List<Room> nestedRooms = null)
+        public override string ToString()
         {
-            this.Id = id;
-
-            this.name = name;
-            this.inviteKey = inviteKey;
-            this.pathToLogo = pathToLogo;
-
-            if (usersAndPoints != null)
-            {
-                this.usersAndPoints = usersAndPoints;
-            }
-
-            if (nestedRooms != null)
-            {
-                this.nestedRooms = nestedRooms;
-            }
+            return Name + " #" + Id.ToString();
         }
     }
 }

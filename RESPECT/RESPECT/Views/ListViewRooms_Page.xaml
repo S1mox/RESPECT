@@ -7,26 +7,31 @@
              mc:Ignorable="d"
              x:Class="RESPECT.Views.ListViewRooms_Page"
              Title="Доступные комнаты">
-
     <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="15">
-        <ScrollView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" IsVisible="True" Orientation="Vertical">
-            <ListView x:Name="rooms_list" VerticalOptions="FillAndExpand" ItemsSource="{Binding Rooms}" ItemTapped="GoToRoomViewPage">
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Padding="0,0,0,5" HeightRequest="48" BackgroundColor="White">
+            <ImageButton Source="{OnPlatform Android=baseline_sort_24.xml, UWP = baseline_sort_black_48.png}"  HorizontalOptions="FillAndExpand" BackgroundColor="White" Clicked="sort_clicked"/>
+            <ImageButton Source="{OnPlatform Android=baseline_refresh_black_36.png, UWP = baseline_refresh_black_48.png}" BackgroundColor="White"  HorizontalOptions="End" Clicked="Refresh_clicked"/>
+            <ImageButton Source="{OnPlatform Android=baseline_add_black_36.png, UWP = baseline_add_black_48.png}" BackgroundColor="White"  HorizontalOptions="End" Clicked="GoToRoomCreate"/>
+        </StackLayout>
+        
+        <ScrollView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" IsVisible="True" Orientation="Neither">
+            <ListView x:Name="rooms_list" VerticalOptions="FillAndExpand" ItemTapped="GoToRoom">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
-                                <Image  Source="{Binding PathToLogo}" 
-                                                   WidthRequest="100" 
-                                                   HeightRequest="100"
-                                             Aspect="AspectFit"
-                                       BackgroundColor="Snow"/>
-                                <Label Text="{Binding Name}" 
-                                                   HorizontalTextAlignment="Center" 
-                                                   VerticalTextAlignment="Center"
-                                       FontSize="24"/>
-                                <!--<Label Text="" FontSize="24" TextColor="Black" 
-                                       HorizontalTextAlignment="Center" 
-                                       VerticalTextAlignment="Center"/>-->
+                                <Image  
+                                    WidthRequest="100" 
+                                    HeightRequest="100"
+                                    Aspect="AspectFit"
+                                    BackgroundColor="Snow"
+                                    Source="{Binding PathToLogo}"/>
+                                
+                                <Label
+                                    HorizontalTextAlignment="Center" 
+                                    VerticalTextAlignment="Center"
+                                    FontSize="24"
+                                    Text="{Binding Name}"/>                            
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

@@ -1,10 +1,5 @@
 ﻿using BottomBar.XamarinForms;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,8 +8,6 @@ namespace RESPECT.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RootTabbed_Page : BottomBarPage
     {
-        private static DB_Data.Users CurrentUser = DB_Data.DB_Data_Controller.CurrentUser;
-
         public RootTabbed_Page()
         {
             InitializeComponent();
@@ -24,7 +17,7 @@ namespace RESPECT.Views
                 Title = "Комнаты",
                 BarBackgroundColor = Color.FromHex("#f5f5f6"),
                 BarTextColor = Color.Black,
-                IconImageSource = "baseline_horizontal_split_black_18.png",
+                IconImageSource = "baseline_horizontal_split_black_18.png",               
             });
 
             Children.Add(new NavigationPage(new Search_Page())
@@ -46,25 +39,70 @@ namespace RESPECT.Views
 
             ToolbarItem item = new ToolbarItem()
             {
-                Text = "Настройки",
-                IconImageSource = ImageSource.FromFile("baseline_settings_black_18dp.png"),
-                Order = ToolbarItemOrder.Primary,
+                Text = "Выход из аккаунта",
+                IconImageSource = ImageSource.FromFile("baseline_perm_identity_black_48.png"),
+                Order = ToolbarItemOrder.Secondary,
             };
 
-            Children.Add(new NavigationPage(new Profile_Page())
+            ToolbarItem help = new ToolbarItem()
             {
-                Title = "Профиль",
-                BarBackgroundColor = Color.FromHex("#f5f5f6"),
-                BarTextColor = Color.Black,
-                IconImageSource = "baseline_account_box_black_18.png",
+                Text = "Справка",
+                IconImageSource = ImageSource.FromFile("baseline_help_black_48dp.png"),
+                Order = ToolbarItemOrder.Secondary
+            };
 
-                ToolbarItems = { item },
-            });
+            item.Clicked += Logout;
+            help.Clicked += GetHelp;
+
+            if (Device.RuntimePlatform == Device.UWP)
+            {
+                Children.Add(new NavigationPage(new Profile_Page())
+                {
+                    Title = "Профиль",
+                    BarBackgroundColor = Color.FromHex("#f5f5f6"),
+                    BarTextColor = Color.Black,
+                    IconImageSource = "baseline_account_box_black_18.png",
+
+                    ToolbarItems = { item, help }
+                });
+            }
+            else
+            {
+                Children.Add(new NavigationPage(new Profile_Page())
+                {
+                    Title = "Профиль",
+                    BarBackgroundColor = Color.FromHex("#f5f5f6"),
+                    BarTextColor = Color.Black,
+                    IconImageSource = "baseline_account_box_black_18.png",
+
+                    ToolbarItems = { item }
+                });
+            }
+           
 
             for (int i = 0; i < Children.Count; i++)
             {
                 BottomBarPageExtensions.SetTabColor(Children[i], Color.FromHex("#000a12"));
-            }            
+            }
+        }
+
+        private async void Logout(object e, EventArgs args)
+        {
+            bool result = await DisplayAlert("Выход из аккаунта", "Вы уверены, что хотите выйти?", "Да", "Отмена");
+            if (result)
+            {
+                CachingData.CurrentData.CurrentUser = null;
+
+                Login_Page.MainPage.MainPage = new NavigationPage(new Login_Page(Login_Page.MainPage))
+                {
+                    BarBackgroundColor = Color.FromHex("#f5f5f6"),
+                    BarTextColor = Color.Black,
+                };
+            }
+        }
+
+        private void GetHelp(object sender, EventArgs args)
+        {
         }
     }
 }

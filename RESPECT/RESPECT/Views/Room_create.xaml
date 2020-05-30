@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="RESPECT.Views.Room_create">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="Snow" Padding="{OnPlatform Android=50, UWP=100}">
+                <Label Text="Привет! Давай Создадим комнату!" 
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    Margin="0,0,0,20"/>
+
+                <Entry x:Name="name_entry"
+                    Placeholder="Название  *"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    WidthRequest="{OnPlatform UWP=220, Android=220}"/>
+
+
+                <Entry x:Name="key_entry"
+                    Placeholder="Пригласительный код"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    WidthRequest="220"/>
+
+                <Label
+                    Text="* - обязательные строки для заполнения"
+                    HorizontalTextAlignment="End"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"/>
+
+                <Button Text="Создать" 
+                    Clicked="Room_create_clicked"
+                    BackgroundColor="#000a12"
+                    TextColor="Snow"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    WidthRequest="210"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
