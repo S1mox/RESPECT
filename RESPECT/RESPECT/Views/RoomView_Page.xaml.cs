@@ -13,20 +13,22 @@ namespace RESPECT.Views
     {
         internal Room CurrentRoom;
         internal RootsViewModel RootsViewModel { get; set; } = new RootsViewModel();
+
         internal TransferViewModel transfer = new TransferViewModel();
 
         public List<User> Users { get; set; }
 
-        public List<Room> ChildsRoom { get; set; } = new List<Room>();
+        public List<Room> ChildsRoom { get; set; } = new List<Room>();  // Вложенные комнаты
         public List<User> Moderators { get; set; } = new List<User>();
-        public List<User> Childs { get; set; } = new List<User>();
-        public List<Points> ChildsPoints { get; set; } = new List<Points>();
+        public List<User> Childs { get; set; } = new List<User>();      // Обычные участник
+        public List<Points> ChildsPoints { get; set; } = new List<Points>();    // Очки участников
 
-        public RoomView_Page(Models.Room room)
+        public RoomView_Page(Room room)
         {
             InitializeComponent();
             
             CurrentRoom = CachingData.CurrentData.Server.Rooms.Where(r => r.Id == room.Id).ToList().First();
+
             Users = CachingData.CurrentData.GetUsersInRoom(CurrentRoom.Id);
 
             for (int i = 0; i < Users.Count; i++)
@@ -104,7 +106,6 @@ namespace RESPECT.Views
 
         private async void Update()
         {
-
             List<Points> points = new List<Points>();
             List<User> childs = new List<User>();
 
@@ -152,8 +153,10 @@ namespace RESPECT.Views
             ListView list = (ListView)sender;
 
             string[] buttons = RootsViewModel.IsModerator(CurrentRoom) ?
-                new string[] { "Открыть профиль", "Назначить модератором", "Удалить пользователя" } 
-                : 
+                new string[] { "Открыть профиль", "Назначить модератором", "Удалить пользователя", "Передать очки" } 
+                : RootsViewModel.IsMember(CurrentRoom) ? 
+                new string[] { "Открыть профиль" , "Передать очки" } 
+                :
                 new string[] { "Открыть профиль" };
 
             string result = await DisplayActionSheet("Профиль", null, null, buttons);
@@ -174,6 +177,33 @@ namespace RESPECT.Views
 
                         Childs.Remove(user);
                         Moderators.Add(user);
+                    }
+
+                    break;
+
+                case "Передать очки":
+                    try
+                    {
+                        string value = await DisplayPromptAsync("Передача", "Сколько вы планируете перевести очков?");
+                        string description = await DisplayPromptAsync("Передача", "Описание перевода", placeholder: "За что?");
+
+                        if (!string.IsNullOrEmpty(value))
+                        {
+                            if (RootsViewModel.IsModerator(CurrentRoom))
+                            {
+                                transfer.GivePoints(user.Id, CachingData.CurrentData.CurrentUser.Id, CurrentRoom.Id, int.Parse(value), string.IsNullOrEmpty(description) ? "" : description);
+                            }
+                            else if (RootsViewModel.IsMember(CurrentRoom))
+                            {
+                                transfer.GivePoints(user.Id, CurrentRoom.Id, int.Parse(value), string.IsNullOrEmpty(description) ? "" : description);
+                            }
+
+                            await DisplayAlert("Передача", "Перевод выполнен успешно", "ОК");
+                        }                     
+                    }
+                    catch (Exception ex)
+                    {
+                        await DisplayAlert("Передача", $"Перевод не выполнен, ошибка: {ex.Message}", "ОК");
                     }
 
                     break;

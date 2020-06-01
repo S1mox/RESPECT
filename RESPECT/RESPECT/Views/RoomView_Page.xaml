@@ -50,6 +50,7 @@
                             HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand"
                             Clicked="SetPicture_clicked"
+                                IsVisible="{OnPlatform Android=true, UWP=false}"
                             FontSize="{OnPlatform UWP=24, Android=8}"/>  
 
                     </StackLayout>

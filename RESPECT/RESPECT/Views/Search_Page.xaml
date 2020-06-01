@@ -14,7 +14,7 @@
                        TextChanged="Search_activate"
                        FontSize="{OnPlatform Android=12, UWP=24}"/>
 
-            <ImageButton BackgroundColor="Snow"
+            <ImageButton BackgroundColor="White"
                          Source="{OnPlatform Android=baseline_vpn_key_24.xml, UWP=baseline_vpn_key_black_24.png}"
                          Clicked="Search_key" 
                          Padding="5,5,15,5" 

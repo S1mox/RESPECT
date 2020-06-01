@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              x:Class="RESPECT.Views.Registration_Page">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Opacity="0.85">
+        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Opacity="0.80" BackgroundColor="White">
             <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="#f5f5f6" Opacity="70" Padding="40" Margin="40">
                 <Image x:Name="LOGO_IMAGE" BackgroundColor="#f5f5f6" 
                        Aspect="AspectFit" 

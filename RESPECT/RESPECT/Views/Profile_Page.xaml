@@ -7,9 +7,9 @@
              x:Class="RESPECT.Views.Profile_Page">
     <ContentPage.Content>
         <ScrollView Orientation="Vertical">
-            <StackLayout Padding="15">
+            <StackLayout Padding="15" BackgroundColor="White">
                 <StackLayout>
-                    <ImageButton x:Name="User_image" BackgroundColor="White" HeightRequest="{OnPlatform Android=230, UWP=400}" Aspect="AspectFit" Margin="30, 15, 30, 10" Clicked="Seturi_button"/>
+                    <ImageButton x:Name="User_image" BackgroundColor="White" BorderColor="White" HeightRequest="{OnPlatform Android=230, UWP=320}" Aspect="AspectFit" Margin="30, 15, 30, 10" Clicked="Seturi_button"/>
                 </StackLayout>
 
                 <Button x:Name="seturi_button_uwp"

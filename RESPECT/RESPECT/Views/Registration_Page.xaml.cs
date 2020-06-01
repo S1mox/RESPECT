@@ -1,4 +1,5 @@
-﻿using RESPECT.Models;
+﻿using RESPECT.CachingData;
+using RESPECT.Models;
 using RESPECT.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -20,21 +21,19 @@ namespace RESPECT.Views
 
         private async void Registration_clicked(object sender, EventArgs e)
         {
-            CachingData.CurrentData.UpdateData();
-
-            if (login_entry.Text != "" && login_entry.Text != null)
+            CurrentData.UpdateData();
+            
+            if (!string.IsNullOrEmpty(login_entry.Text))
             {
-                if (password_entry.Text == confirm_password_entry.Text)
+                if (!string.IsNullOrEmpty(password_entry.Text) && password_entry.Text == confirm_password_entry.Text)
                 {
-                    if (new List<User>(server.Users.Where(u => u.Login == login_entry.Text).ToList()).Count == 0)
+                    if (new List<User>(CurrentData.Server.Users.Where(u => u.Login == login_entry.Text).ToList()).Count == 0)
                     {
-                        CachingData.CurrentData.UpdateData();
+                        int id = CurrentData.Server.Users.Count + 1;
 
-                        int id = CachingData.CurrentData.Server.Users.Count + 1;
-
-                        for (int i = 0; i < CachingData.CurrentData.Server.Users.Count; i++)
+                        for (int i = 0; i < CurrentData.Server.Users.Count; i++)
                         {
-                            if (i != CachingData.CurrentData.Server.Users[i].Id)
+                            if (i !=CurrentData.Server.Users[i].Id)
                             {
                                 id = i;
                                 break;
@@ -50,7 +49,7 @@ namespace RESPECT.Views
                             PathToImage = ""
                         });
 
-                        CachingData.CurrentData.UpdateData();
+                        CurrentData.UpdateData();
 
                         await Navigation.PopAsync();
                     }

@@ -25,8 +25,9 @@
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateThumbprint>EE6E7B501EBC61B13E5629326A94DF6C1BD597E7</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>FCA81A8601DE43AB3C53C3B35A5C2768F0C7BB8B</PackageCertificateThumbprint>
     <AppxPackageDir>D:\RESPECT\Release\uwp%27s\</AppxPackageDir>
+    <PackageCertificateKeyFile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
